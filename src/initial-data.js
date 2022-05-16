@@ -1,19 +1,74 @@
-const initialData = {
-    tasks: {
-        'task-1': { id: 'task-1', title: 'Cahnge color', project: 'Adamo', content: 'Change the color of the div', priority: '1' },
-        'task-2': { id: 'task-2', title: 'Maket changes',project: 'Amamrina', content: 'Change the style', priority: '2' },
-        'task-3': { id: 'task-3', title: 'Api implementation',project: 'LYL', content: 'Connect to api', priority: '3' },
-        'task-4': { id: 'task-4', title: 'Bug fix',project: 'z/s ligo', content: 'Fix the problem on mobile devices', priority: '2' },
+const initialData = [
+    {
+        id: 'Column-1',
+        title: ' 📃 Backlog',
+        color: 'red',
+        tasks: [
+            {
+                id: "Task 1",
+                title: 'Learn JavaScript',
+                priority: 'Very High',
+                project: 'Amarina',
+                content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            },
+            {
+                id: "Task 2",
+                title: 'Learn Git',
+                priority: 'High',
+                project: 'LYL'
+            },
+            {
+                id: "Task 3",
+                title: 'Learn Python',
+                priority: 'Medium',
+                project: 'Sportx'
+            },
+        ]
     },
-    columns: {
-        'column-1': {
-            id: 'column-1',
-            title: 'To do',
-            taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
-        },
+    {
+        id: 'Column-2',
+        title: ' ✏️ To Do',
+        color: 'yellow',
+        tasks: [
+            {
+                id: "Task 4",
+                title: 'Learn CSS',
+                priority: 'Low',
+                project: 'Amarina'
+            },
+            {
+                id: "Task 5",
+                title: 'Learn Golang',
+                priority: 'Very Low',
+                project: 'feelgreen'
+            }
+        ]
     },
-    // for future
-    columnOrder: ['column-1'],
-};
+    {
+        id: 'Column-3',
+        title: ' ✔️ In Progress',
+        color: 'green',
+        tasks: [
+            {
+                id: "Task 6",
+                title: 'Learn HTML',
+                priority: 'High',
+                project: 'Adamo'
+            }
+        ]
+    },
+    {
+        id: 'Column-4',
+        title: ' ✔️ Testing',
+        color: 'blue',
+        tasks: []
+    },
+    {
+        id: 'Column-5',
+        title: ' ✔️ Done',
+        color: 'purple',
+        tasks: []
+    }
+]
 
 export default initialData;

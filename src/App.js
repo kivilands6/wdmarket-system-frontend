@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Projects from './components/Projects';
 import Tasks from './components/Tasks';
 import ErrorPage from './components/ErrorPage';
+import Kanban from './components/kanban'
 
 import { useState, useEffect } from 'react';
 import { useImmerReducer } from 'use-immer'
@@ -84,7 +85,7 @@ function App() {
             <Sidebar/>
             <div className={'main-content ' + (state.isSidebarOpen ? 'ml-28' : 'ml-0')} id='main'>
               <Header />
-              <div className={'content min-h-[90vh] bg-[#F6F9FF] pl-16 pt-10 ' + (state.isSidebarOpen ? 'rounded-tl-[55px]' : '') }>
+              <div className={'content min-h-[90vh] bg-[#F6F9FF] pt-16 px-10 pb-10 ' + (state.isSidebarOpen ? 'rounded-tl-[55px]' : '') }>
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/projects" element={<Projects />} />

@@ -7,7 +7,7 @@ function Header() {
     const appState = useContext(StateContext)
 
   return (
-    <div className='main-header h-24 flex mx-10 items-center'>
+    <div className='main-header h-24 flex mx-10 items-center mt-0'>
         <button onClick={() => appDispatch({type: "toggleSidebar"})}>
             <div class="space-y-1 mr-3">
                 <div class="w-6 h-0.5 bg-[#242424] rounded"></div>
