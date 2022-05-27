@@ -2,10 +2,12 @@
   "name": "wdmarket",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "immer": "^9.0.12",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",

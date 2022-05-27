@@ -12,15 +12,15 @@ function Popup( {task, togglePopupClose, isOpenTask} ) {
         <div className="popup-content relative w-3/4 my-0 mx-auto h-auto max-h-[70vh] bg-[#F6F9FF] mt-[10vh] rounded-xl min-h-[500px] flex">
 
             <div className="task-left-column w-[70%] py-8 pt-5 px-16">
-                <h2 className="task-title">
+                <h2 className="task-title text-4xl text-bold">
                     {task.title}
                 </h2>
                 <div className="task-body mt-10">
-                    <h2 className="description-label">Description:</h2>
+                    <h2 className="description-label text-xl text-bold">Description:</h2>
                     <div className="task-description mt-4 bg-white p-5 rounded-lg shadow-sm">{task.content}</div>
                 </div>
                 <div className="body-subtasks mt-4 border-l-2 pl-6 py-3">
-                    <h2 className="subtasks-label">Subtasks:</h2>
+                    <h2 className="subtasks-label text-lg text-bold">Subtasks:</h2>
                     <div className="checkbox-area mt-3">
                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
                         <label for="vehicle1"> I have a bike</label><br/>

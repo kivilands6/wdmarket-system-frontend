@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import StateContext from '../StateContext'
 import DispatchContext from '../DispatchContext'
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 import logo from '../img/logo.png'
-import dashboard from '../icons/dashboard.svg';
-import tasks from '../icons/tasks.svg';
-import project from '../icons/project.svg';
+import dashboard from '../icons/dashboard.svg'
+import tasks from '../icons/tasks.svg'
+import project from '../icons/project.svg'
+import users from '../icons/users.svg'
 
 const Sidebar = () => {
     const appState = useContext(StateContext)
@@ -18,6 +19,8 @@ const Sidebar = () => {
             <Link to='/' onClick={() => appDispatch({type: 'changeNavItemDashboard'})}><img src={dashboard} alt="dashboard" className='mx-auto p-5 hover:bg-[#5932EA] hover:rounded-xl ease-in duration-200' /></Link>
             <Link to='/projects' onClick={() => appDispatch({type: 'changeNavItemProjects'})}><img src={project} alt="project" className='mx-auto p-5 hover:bg-[#5932EA] hover:rounded-xl ease-in duration-200' /></Link>
             <Link to='/tasks' onClick={() => appDispatch({type: 'changeNavItemTasks'})} ><img src={tasks} alt="tasks" className='mx-auto p-5 hover:bg-[#5932EA] hover:rounded-xl ease-in duration-200' /></Link>
+            <Link to='/users' onClick={() => appDispatch({type: 'changeNavItemUsers'})} ><img src={users} alt="users" className='mx-auto p-5 hover:bg-[#5932EA] hover:rounded-xl ease-in duration-200' /></Link>
+            <Link to='/profile' onClick={() => appDispatch({type: 'changeNavItemProfile'})} ><img src={users} alt="profile" className='mx-auto p-5 hover:bg-[#5932EA] hover:rounded-xl ease-in duration-200' /></Link>
         </div>
     )
 }

@@ -11,7 +11,7 @@ const Task = ( { task, index } ) => {
 
   const togglePopupClose = () => {
     setIsOpenTask(false)
-}
+  }
 
   return (
     <Draggable
@@ -41,7 +41,7 @@ const Task = ( { task, index } ) => {
                 <div className="task-progress-title">Task progress</div>
                 <div className="progress-percent text-[#5932EA]">40%</div>
               </div>
-              <div className="task-content text-[#5932EA]">####--------------</div>
+              <div className="task-content text-[#5932EA]">#####-----------</div>
             </div>
             <div className="task-container-footer flex justify-between">
               <div className="task-users">users pic</div>
