@@ -1,10 +1,10 @@
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import initialData from '../../initial-data'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import initialDataTasks from '../../initial-data-tasks'
 import { useState } from 'react'
 import Task from '../Tasks-components/Task'
 
-const Kanban = () => {
-    const [data, setData] = useState(initialData)
+const TaskKanban = () => {
+    const [data, setData] = useState(initialDataTasks)
 
     const onDragEnd = result => {
         if (!result.destination) return
@@ -68,4 +68,4 @@ const Kanban = () => {
     )
 }
 
-export default Kanban
+export default TaskKanban

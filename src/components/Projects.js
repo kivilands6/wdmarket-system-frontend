@@ -1,10 +1,10 @@
 import React from 'react'
-import Kanban from './kanban'
+import ProjectsKanban from './projects-kanban'
 
 function Projects() {
   return (
     <div>
-        <Kanban />
+        <ProjectsKanban />
     </div>
   )
 }

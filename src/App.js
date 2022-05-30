@@ -6,7 +6,6 @@ import Header from './components/Header';
 import Projects from './components/Projects';
 import Tasks from './components/Tasks';
 import ErrorPage from './components/ErrorPage';
-import Kanban from './components/kanban'
 import Users from './components/Users';
 import Login from './components/Login';
 import Profile from './components/Profile';

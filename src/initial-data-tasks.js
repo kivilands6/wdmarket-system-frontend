@@ -1,7 +1,7 @@
-const initialData = [
+const initialDataTasks = [
     {
         id: 'Column-1',
-        title: ' 📃 Backlog',
+        title: ' 📃 Backlog tasks',
         color: 'red',
         tasks: [
             {
@@ -71,4 +71,4 @@ const initialData = [
     }
 ]
 
-export default initialData;
+export default initialDataTasks;
