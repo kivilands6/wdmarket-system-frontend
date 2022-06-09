@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import Popup from './Popup'
 
-const Task = ( { task, index } ) => {
+const Task = ( { task, index, statuss } ) => {
   const [isOpenTask, setIsOpenTask] = useState(false);
   
   const togglePopupOpen = () => {
@@ -15,8 +15,8 @@ const Task = ( { task, index } ) => {
 
   return (
     <Draggable
-      key={task.id}
-      draggableId={task.id}
+      key={task._id}
+      draggableId={task._id}
       index={index}
     >
       {(provided, snapshot) => (
@@ -33,7 +33,7 @@ const Task = ( { task, index } ) => {
           <div className="task-container bg-white rounded-xl p-4 mt-4">
             <div className="task-container-header flex justify-between">
               <h4 className="task-title">{task.title}</h4>
-              <div className="task-priority">{task.priority}</div>
+              <div className="task-priority">{statuss}</div>
             </div>
             <div className="task-project text-[#B5B5B5]">{task.project}</div>
             <div className="task-container-body mt-7">
@@ -44,11 +44,11 @@ const Task = ( { task, index } ) => {
               <div className="task-content text-[#5932EA]">#####-----------</div>
             </div>
             <div className="task-container-footer flex justify-between">
-              <div className="task-users">users pic</div>
+              <div className="task-users">{task.assignee}</div>
               <div className="task-comments text-[#B5B5B5]">comments</div>
             </div>
           </div>
-          <Popup task={task} togglePopupClose={togglePopupClose} isOpenTask={isOpenTask} />
+          <Popup task={task} togglePopupClose={togglePopupClose} isOpenTask={isOpenTask} statuss={statuss} />
         </div>
       )}
     </Draggable>

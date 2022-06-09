@@ -48,8 +48,9 @@ function Users() {
             <thead className="bg-gray-200">
                 <tr>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Username</th>
+                    <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Name</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Email</th>
-                    <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Role</th>
+                    <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Phone</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Joined at</th>
                 </tr>
             </thead>
@@ -59,9 +60,10 @@ function Users() {
                     return (
                         <tr className="border">
                             <td className="px-6 py-3">{user.username}</td>
+                            <td className="px-6 py-3">{user.name}</td>
                             <td className="px-6 py-3">{user.email}</td>
-                            <td className="px-6 py-3">Project manager</td>
-                            <td className="px-6 py-3">21.11.2021</td>
+                            <td className="px-6 py-3">{user.phone}</td>
+                            <td className="px-6 py-3">{user.joinedDate}</td>
                         </tr>
                     )
                 })}

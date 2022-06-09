@@ -1,7 +1,7 @@
 const initialDataProjects = [
     {
         id: 'Column-1',
-        title: ' 📃 Backlog',
+        title: ' 📃 New',
         color: 'red',
         tasks: [
             {
@@ -38,26 +38,14 @@ const initialDataProjects = [
     },
     {
         id: 'Column-2',
-        title: ' ✏️ To Do',
+        title: ' ✏️ In progress',
         color: 'yellow',
         tasks: []
     },
     {
         id: 'Column-3',
-        title: ' ✔️ In Progress',
+        title: ' ✔️ Completed',
         color: 'green',
-        tasks: []
-    },
-    {
-        id: 'Column-4',
-        title: ' ✔️ Testing',
-        color: 'blue',
-        tasks: []
-    },
-    {
-        id: 'Column-5',
-        title: ' ✔️ Done',
-        color: 'purple',
         tasks: []
     }
 ]

@@ -39,7 +39,13 @@ function App() {
     user: {
       token: localStorage.getItem('userToken'),
       username: localStorage.getItem('userUsername'),
-      avatar: localStorage.getItem('userAvatar')
+      avatar: localStorage.getItem('userAvatar'),
+      email: localStorage.getItem("userEmail"),
+      name: localStorage.getItem("userName"),
+      surname: localStorage.getItem("userSurname"),
+      phone: localStorage.getItem("userPhone"),
+      address: localStorage.getItem("userAddress"),
+      joinedDate: localStorage.getItem("userJoinedDate"),
     }
   }
 
@@ -91,17 +97,28 @@ function App() {
       localStorage.setItem("userToken", state.user.token)
       localStorage.setItem("userUsername", state.user.username)
       localStorage.setItem("userAvatar", state.user.avatar)
+      localStorage.setItem("userEmail", state.user.email)
+      localStorage.setItem("userName", state.user.name)
+      localStorage.setItem("userSurname", state.user.surname)
+      localStorage.setItem("userPhone", state.user.phone)
+      localStorage.setItem("userAddress", state.user.address)
+      localStorage.setItem("userJoinedDate", state.user.joinedDate)
     }else {
       localStorage.removeItem("userToken")
       localStorage.removeItem("userUsername")
       localStorage.removeItem("userAvatar")
+      localStorage.removeItem("userEmail", state.user.email)
+      localStorage.removeItem("userName", state.user.name)
+      localStorage.removeItem("userSurname", state.user.surname)
+      localStorage.removeItem("userPhone", state.user.phone)
+      localStorage.removeItem("userAddress", state.user.address)
+      localStorage.removeItem("userJoinedDate", state.user.joinedDate)
     }
   }, [state.loggedIn])
 
   useEffect(() => {
     if (state.isSidebarOpen) {
       localStorage.setItem('isSidebarOpen', state.isSidebarOpen)
-      console.log(localStorage.isSidebarOpen)
     } else {
       localStorage.removeItem('isSidebarOpen')
     }

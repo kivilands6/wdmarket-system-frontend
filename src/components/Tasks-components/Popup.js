@@ -1,10 +1,60 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import Axios from "axios"
 
-function Popup( {task, togglePopupClose, isOpenTask} ) {
+function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
     const [isAccessOpen, setIsAccessOpen] = useState(false)
+
+    const [editAccess, setEditAccess] = useState(false)
+    const [accessCount, setAccessCount] = useState(0)
+    const [access, setAccess] = useState("")
 
     const toggleAccess = () => {
         setIsAccessOpen(!isAccessOpen)
+    }
+
+    useEffect(() => {
+        const ourRequest = Axios.CancelToken.source()
+        async function getAccess(){
+            console.log(task.project)
+            try{
+                const response = await Axios.post('http://localhost:8000/project-access',{
+                    name: task.project,
+                }, {cancelToken: ourRequest.token})
+                const newAccess = (response.data[0].access)
+                setAccess(newAccess)
+                
+            }
+            catch(e){
+                console.log("There was a problem or the request was canceled!")
+            }
+        }
+        getAccess()
+        return () => {
+            ourRequest.cancel()
+        }
+    }, [accessCount])
+
+    function handleAccessChange() {
+        const ourRequest = Axios.CancelToken.source()
+        console.log(task.project)
+        async function updateAccess(){
+            try{
+                const response = await Axios.post('http://localhost:8000/project-access-update',{
+                    name: task.project,
+                    access: access
+                }, {cancelToken: ourRequest.token})
+                setAccessCount(accessCount + 1)
+                console.log(accessCount)
+                
+            }
+            catch(e){
+                console.log("There was a problem or the request was canceled!")
+            }
+        }
+        updateAccess()
+        return () => {
+            ourRequest.cancel()
+        }
     }
 
   return (
@@ -34,21 +84,40 @@ function Popup( {task, togglePopupClose, isOpenTask} ) {
 
             <div className="task-right-column w-[30%] bg-white rounded-tr-xl rounded-br-xl">
                 <div className="column-head p-8 pt-5 flex justify-end">
-                    <div className="access">
+                <div className="access">
                         <button className="btn-close mr-3" onClick={(e) => {
                             e.stopPropagation()
                             toggleAccess()
                             }}>Access
                         </button>
-                        <div className={"access-dropdown min-w-[300px] absolute p-3 shadow-lg border-gray-200 border right-12 top-16 bg-white rounded-lg max-w-[400px] " + (isAccessOpen ? "" : "hidden")}>
-                            <div className="access-content">
-                                amarina link lorem ipsum text to see how this scales and some more extra text, and also this should be toggleable
+                        <div className={"access-dropdown min-w-[300px] absolute p-3 shadow-lg flex justify-between border-gray-200 border right-12 top-16 bg-white rounded-lg max-w-[400px] " + (isAccessOpen ? "" : "hidden")}>
+                            <div className="access-content mr-4">
+                                {editAccess && 
+                                    <input value={access} onChange={e => setAccess(e.target.value)} id="access" name="access" className="w-full py-2 px-5 rounded-xl border-gray-200 border mt-1" type="text" autoComplete="off" />
+                                }
+                                {!editAccess && 
+                                    access
+                                }
+                            </div>
+                            <div className="edit">
+                                {editAccess && 
+                                    <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={() => {
+                                        setEditAccess(false)
+                                        handleAccessChange()
+                                    }}>Save</button>
+                                }
+                                {!editAccess && 
+                                    <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={() => setEditAccess(true)}>Edit</button>
+                                }
+                                
                             </div>
                         </div>
                     </div>
                     <button className="btn-close" onClick={(e) => {
                         e.stopPropagation()
                         togglePopupClose()
+                        setEditAccess(false)
+                        toggleAccess()
                         }}>x
                     </button>
                 </div>
@@ -58,8 +127,8 @@ function Popup( {task, togglePopupClose, isOpenTask} ) {
                         <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{task.project}</div>
                     </div>
                     <div className="task-priority justify-between flex items-center mt-3">
-                        <div className="priority-label mr-10">Priority:</div>
-                        <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{task.priority}</div>
+                        <div className="priority-label mr-10">Statuss:</div>
+                        <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{statuss}</div>
                     </div>
                 </div>
             </div>

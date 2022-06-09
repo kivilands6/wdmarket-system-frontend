@@ -1,10 +1,59 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import Axios from "axios"
 
-function Popup( {task, togglePopupClose, isOpenTask} ) {
+function Popup( {project, togglePopupClose, isOpenTask, statuss} ) {
     const [isAccessOpen, setIsAccessOpen] = useState(false)
+
+    const [editAccess, setEditAccess] = useState(false)
+
+    const [access, setAccess] = useState("")
 
     const toggleAccess = () => {
         setIsAccessOpen(!isAccessOpen)
+    }
+
+    useEffect(() => {
+        const ourRequest = Axios.CancelToken.source()
+        async function getAccess(){
+            console.log(project.name)
+            try{
+                const response = await Axios.post('http://localhost:8000/project-access',{
+                    name: project.name,
+                }, {cancelToken: ourRequest.token})
+                const newAccess = (response.data[0].access)
+                setAccess(newAccess)
+                
+            }
+            catch(e){
+                console.log("There was a problem or the request was canceled!")
+            }
+        }
+        getAccess()
+        return () => {
+            ourRequest.cancel()
+        }
+    }, [])
+
+    function handleAccessChange() {
+        const ourRequest = Axios.CancelToken.source()
+        console.log(project.name)
+        async function updateAccess(){
+            try{
+                const response = await Axios.post('http://localhost:8000/project-access-update',{
+                    name: project.name,
+                    access: access
+                }, {cancelToken: ourRequest.token})
+                console.log(response)
+                
+            }
+            catch(e){
+                console.log("There was a problem or the request was canceled!")
+            }
+        }
+        updateAccess()
+        return () => {
+            ourRequest.cancel()
+        }
     }
 
   return (
@@ -13,11 +62,14 @@ function Popup( {task, togglePopupClose, isOpenTask} ) {
 
             <div className="task-left-column w-[70%] py-8 pt-5 px-16">
                 <h2 className="task-title text-4xl text-bold">
-                    {task.title}
+                    {project.name}
                 </h2>
+                <h3 className="text-[#9197B3] mt-2">
+                    {project.link}
+                </h3>
                 <div className="task-body mt-10">
                     <h2 className="description-label text-xl text-bold">Description:</h2>
-                    <div className="task-description mt-4 bg-white p-5 rounded-lg shadow-sm">{task.content}</div>
+                    <div className="task-description mt-4 bg-white p-5 rounded-lg shadow-sm">{project.content}</div>
                 </div>
             </div>
 
@@ -29,26 +81,53 @@ function Popup( {task, togglePopupClose, isOpenTask} ) {
                             toggleAccess()
                             }}>Access
                         </button>
-                        <div className={"access-dropdown min-w-[300px] absolute p-3 shadow-lg border-gray-200 border right-12 top-16 bg-white rounded-lg max-w-[400px] " + (isAccessOpen ? "" : "hidden")}>
-                            <div className="access-content">
-                                {task.access}
+                        <div className={"access-dropdown min-w-[300px] absolute p-3 shadow-lg flex justify-between border-gray-200 border right-12 top-16 bg-white rounded-lg max-w-[400px] " + (isAccessOpen ? "" : "hidden")}>
+                            <div className="access-content mr-4">
+                                {editAccess && 
+                                    <input value={access} onChange={e => setAccess(e.target.value)} id="access" name="access" className="w-full py-2 px-5 rounded-xl border-gray-200 border mt-1" type="text" autoComplete="off" />
+                                }
+                                {!editAccess && 
+                                    access
+                                }
+                            </div>
+                            <div className="edit">
+                                {editAccess && 
+                                    <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={() => {
+                                        setEditAccess(false)
+                                        handleAccessChange()
+                                    }}>Save</button>
+                                }
+                                {!editAccess && 
+                                    <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={() => setEditAccess(true)}>Edit</button>
+                                }
+                                
                             </div>
                         </div>
                     </div>
                     <button className="btn-close" onClick={(e) => {
                         e.stopPropagation()
                         togglePopupClose()
+                        setEditAccess(false)
+                        toggleAccess()
                         }}>x
                     </button>
                 </div>
                 <div className="column-content p-8 pt-0">
-                    <div className="task-project justify-between flex items-center">
-                        <div className="project-label mr-10">Price:</div>
-                        <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{task.price}</div>
+                    <div className="project-price justify-between flex items-center">
+                        <div className="price-label mr-2">Price:</div>
+                        <div className="price border rounded-lg border-[#E2E2E2] px-6 py-1 w-3/5 text-center">{project.price}$</div>
                     </div>
-                    <div className="task-priority justify-between flex items-center mt-3">
-                        <div className="priority-label mr-10">Priority:</div>
-                        <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{task.priority}</div>
+                    <div className="project-priority justify-between flex items-center mt-3">
+                        <div className="priority-label mr-2 w-fit">Statuss:</div>
+                        <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-3/5 text-center">{statuss}</div>
+                    </div>
+                    <div className="project-start-date justify-between flex items-center mt-3">
+                        <div className="start-date-label mr-2 w-fit">Start date:</div>
+                        <div className="start-date-value border rounded-lg border-[#E2E2E2] px-6 py-1 w-3/5 text-center">{project.startDate}</div>
+                    </div>
+                    <div className="project-end-date justify-between flex items-center mt-3">
+                        <div className="end-date-label mr-2 w-fit">Due date:</div>
+                        <div className="end-date-value border rounded-lg border-[#E2E2E2] px-6 py-1 w-3/5 text-center">{project.endDate}</div>
                     </div>
                 </div>
             </div>
