@@ -1,19 +1,23 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import ProjectsKanban from './projects-kanban'
 import NewProjectPopup from './Projects-components/NewProjectPopup'
+import StateContext from '../StateContext'
 
 function Projects() {
+  //just some states
+  const appState = useContext(StateContext)
   const [projectCreated, setProjectCreated] = useState(0)
   const [newProjectPopup, setNewProjectPopup] = useState(false)
 
-  function toggleNewProjectPopup() {
+  function toggleNewProjectPopup() { // for toggling new project popup
     setNewProjectPopup(!newProjectPopup)
   }
+
   return (
     <div>
-      <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewProjectPopup}>Add new project</button>
+      {appState.user.admin ? <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewProjectPopup}>Add new project</button> : ""}
       <ProjectsKanban projectCreated={projectCreated} />
-      <NewProjectPopup newProjectPopup={newProjectPopup} toggleNewProjectPopup={toggleNewProjectPopup} setProjectCreated={setProjectCreated} />
+      {appState.user.admin ? <NewProjectPopup newProjectPopup={newProjectPopup} toggleNewProjectPopup={toggleNewProjectPopup} setProjectCreated={setProjectCreated} /> : ""}
     </div>
   )
 }

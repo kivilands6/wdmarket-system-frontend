@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import UsersPopup from './Users-components/UsersPopup'
 import {useImmer} from 'use-immer'
 import Axios from "axios"
+import StateContext from '../StateContext'
 
 function Users() {
+    //Some state initialization
+    const appState = useContext(StateContext)
     const [state, setState] = useImmer({
         isLoading: true,
         allUsers: []
@@ -11,10 +14,12 @@ function Users() {
     const [usersCreated, setUsersCreated] = useState(0)
     const [newUserPopup, setNewUserPopup] = useState(false)
 
+    // toggle new user popup
     function toggleNewUserPopup() {
         setNewUserPopup(!newUserPopup)
     }
 
+    // get all users and store them in state
     useEffect(() => {
         const ourRequest = Axios.CancelToken.source()
     
@@ -37,11 +42,13 @@ function Users() {
         }
     }, [usersCreated])
 
+    console.log(appState.user.admin)
+
   return (
     <div className=''>
-      <button className="py-3 px-7 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewUserPopup}>Add new user</button>
+        {appState.user.admin ? <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewUserPopup}>Add new user</button> : ""}
         <div>
-            <h2 className='body-title mt-10 font-semibold text-xl'>All users</h2>
+            <h2 className='body-title font-semibold text-xl'>All users</h2>
         </div>
       <div className="main-area mt-5 relative overflow-x-auto shadow-md sm:rounded-xl w-min">
         <table className="table-auto text-left rounded-xl w-full">
@@ -58,7 +65,7 @@ function Users() {
 
                 {state.allUsers.map(user => {
                     return (
-                        <tr className="border">
+                        <tr className="border" key={user.username}>
                             <td className="px-6 py-3">{user.username}</td>
                             <td className="px-6 py-3">{user.name}</td>
                             <td className="px-6 py-3">{user.email}</td>
@@ -71,8 +78,7 @@ function Users() {
             </tbody>
         </table>
       </div>
-
-      <UsersPopup newUserPopup={newUserPopup} toggleNewUserPopup={toggleNewUserPopup} setUsersCreated={setUsersCreated} />
+      {appState.user.admin ? <UsersPopup newUserPopup={newUserPopup} toggleNewUserPopup={toggleNewUserPopup} setUsersCreated={setUsersCreated} /> : ""}
     </div>
   )
 }

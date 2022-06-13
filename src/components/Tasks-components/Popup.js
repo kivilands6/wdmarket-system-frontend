@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import Axios from "axios"
+import Subtask from './Subtask'
 
 function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
     const [isAccessOpen, setIsAccessOpen] = useState(false)
+    const [subtasks, setSubtasks] = useState([])
+    const [subtaskStatusChange, setSubtaskStatusChange] = useState(0)
 
     const [editAccess, setEditAccess] = useState(false)
     const [accessCount, setAccessCount] = useState(0)
@@ -10,8 +13,32 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
 
     const toggleAccess = () => {
         setIsAccessOpen(!isAccessOpen)
+        console.log(subtasks)
+        console.log(task._id)
     }
 
+    // fetch all subtasks
+    useEffect(() => {
+        const ourRequest = Axios.CancelToken.source()
+        async function getSubtasks(){
+            console.log(task.project)
+            try{
+                const response = await Axios.get('http://localhost:8000/all-subtasks', {cancelToken: ourRequest.token})
+                console.log(response.data)
+                setSubtasks(response.data)
+                
+            }
+            catch(e){
+                console.log("There was a problem or the request was canceled!")
+            }
+        }
+        getSubtasks()
+        return () => {
+            ourRequest.cancel()
+        }
+    }, [subtaskStatusChange])
+
+    // get project access
     useEffect(() => {
         const ourRequest = Axios.CancelToken.source()
         async function getAccess(){
@@ -34,6 +61,7 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
         }
     }, [accessCount])
 
+    // change access when changed
     function handleAccessChange() {
         const ourRequest = Axios.CancelToken.source()
         console.log(task.project)
@@ -57,6 +85,15 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
         }
     }
 
+    const subtaskCount = subtasks.filter(subtask => subtask.taskId == task._id ).length
+    const subtaskDoneCount = subtasks.filter(subtask => subtask.taskId == task._id && subtask.value == true).length
+
+    const progress = 100 / subtaskCount * subtaskDoneCount
+
+    console.log(subtaskCount)
+
+    
+
   return (
     <div className={"popup-box fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-50 " + (isOpenTask ? "" : "hidden")} onClick={(e) => {e.stopPropagation()}}>
         <div className="popup-content relative w-3/4 my-0 mx-auto h-auto max-h-[70vh] bg-[#F6F9FF] mt-[10vh] rounded-xl min-h-[500px] flex">
@@ -71,13 +108,14 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
                 </div>
                 <div className="body-subtasks mt-4 border-l-2 pl-6 py-3">
                     <h2 className="subtasks-label text-lg text-bold">Subtasks:</h2>
+                    {subtaskCount ? 
+                    <div className="progress-bar w-full h-1 bg-red-500">
+                        <div className="progress-bar-filled bg-green-500 h-1" style={{ width: progress + "%" }}></div>
+                    </div> : ""}
                     <div className="checkbox-area mt-3">
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-                        <label for="vehicle1"> I have a bike</label><br/>
-                        <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" />
-                        <label for="vehicle2"> I have a car</label><br/>
-                        <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-                        <label for="vehicle3"> I have a boat</label><br/>
+                        {subtasks.filter(subtask => subtask.taskId == task._id ).map((subtask, index) => ( 
+                            <Subtask subtask={subtask} index={index} subtasks={subtasks} setSubtasks={setSubtasks} key={subtask._id} setSubtaskStatusChange={setSubtaskStatusChange} subtaskStatusChange={subtaskStatusChange} />
+                        ))}
                     </div>
                 </div>
             </div>
@@ -117,7 +155,7 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
                         e.stopPropagation()
                         togglePopupClose()
                         setEditAccess(false)
-                        toggleAccess()
+                        setIsAccessOpen(false)
                         }}>x
                     </button>
                 </div>

@@ -19,7 +19,7 @@ import DispatchContext from './DispatchContext'
 
 
 function App() {
-
+  // check for page by link
   function NavItemSort() {
     if(window.location.pathname === '/projects') {
       return "Projects"
@@ -27,11 +27,21 @@ function App() {
       return "Tasks"
     } else if (window.location.pathname === '/users') {
       return "Users"
-    } else {
-      return "Dashboard"
+    } else if (window.location.pathname === '/profile'){
+      return "My profile"
     }
   }
 
+  // convert "true" to true and "false" to false from local storage
+  function convertLocalStorage() {
+    if(localStorage.getItem("userAdmin") == "true") {
+      return true
+    } else {
+      return false
+    }
+  }
+
+    // User data
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userToken")),
     isSidebarOpen: Boolean(localStorage.getItem("isSidebarOpen")),
@@ -46,9 +56,11 @@ function App() {
       phone: localStorage.getItem("userPhone"),
       address: localStorage.getItem("userAddress"),
       joinedDate: localStorage.getItem("userJoinedDate"),
+      admin: convertLocalStorage(),
     }
   }
 
+    // Main Dispatch reducer 
   function ourReducer(draft, action){
     switch (action.type) {
       case "login":
@@ -90,8 +102,10 @@ function App() {
     }
   }
 
+  // initialize reducer
   const [state, dispatch] = useImmerReducer( ourReducer, initialState)
 
+  // When login or logout then set local storage or remove
   useEffect(() => {
     if(state.loggedIn) {
       localStorage.setItem("userToken", state.user.token)
@@ -103,6 +117,7 @@ function App() {
       localStorage.setItem("userPhone", state.user.phone)
       localStorage.setItem("userAddress", state.user.address)
       localStorage.setItem("userJoinedDate", state.user.joinedDate)
+      localStorage.setItem("userAdmin", state.user.admin)
     }else {
       localStorage.removeItem("userToken")
       localStorage.removeItem("userUsername")
@@ -113,9 +128,11 @@ function App() {
       localStorage.removeItem("userPhone", state.user.phone)
       localStorage.removeItem("userAddress", state.user.address)
       localStorage.removeItem("userJoinedDate", state.user.joinedDate)
+      localStorage.removeItem("userAdmin", state.user.admin)
     }
   }, [state.loggedIn])
 
+    // check if sidebar is open and save in local storage
   useEffect(() => {
     if (state.isSidebarOpen) {
       localStorage.setItem('isSidebarOpen', state.isSidebarOpen)
