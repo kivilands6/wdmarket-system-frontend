@@ -63,6 +63,7 @@ function Users() {
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Name</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Email</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Phone</th>
+                    <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Role</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Joined at</th>
                 </tr>
             </thead>
@@ -75,6 +76,7 @@ function Users() {
                             <td className="px-6 py-3">{user.name}</td>
                             <td className="px-6 py-3">{user.email}</td>
                             <td className="px-6 py-3">{user.phone}</td>
+                            <td className="px-6 py-3">{user.admin ? "Admin" : "User"}</td>
                             <td className="px-6 py-3">{user.joinedDate}</td>
                         </tr>
                     )

@@ -62,7 +62,7 @@ const progress = 100 / subtaskCount * subtaskDoneCount
           <div className="task-container bg-white rounded-xl p-4 mt-4">
             <div className="task-container-header flex justify-between">
               <h4 className="task-title">{task.title}</h4>
-              <div className="task-priority">{statuss}</div>
+              <div className="task-statuss ml-2">{statuss}</div>
             </div>
             <div className="task-project text-[#B5B5B5]">{task.project}</div>
             {subtaskCount ? 

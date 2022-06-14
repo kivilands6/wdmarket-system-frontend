@@ -160,6 +160,9 @@ const TaskKanban = ({taskCreated}) => {
                                     </div>
                                     <div className="kanban__section__content">
                                         {
+                                            appState.user.admin ? section.tasks.map((task, index) => (
+                                                <Task task={task} index={index} statuss={section.title} key={task._id} />
+                                            )) : 
                                             section.tasks.filter(task => task.assignee == appState.user.username).map((task, index) => (
                                                 <Task task={task} index={index} statuss={section.title} key={task._id} />
                                             ))
