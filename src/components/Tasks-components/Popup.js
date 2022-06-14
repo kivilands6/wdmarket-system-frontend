@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react'
 import Axios from "axios"
 import Subtask from './Subtask'
 
-function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
+function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubtasks, subtaskStatusChange, setSubtaskStatusChange, subtaskCount, progress} ) {
     const [isAccessOpen, setIsAccessOpen] = useState(false)
-    const [subtasks, setSubtasks] = useState([])
-    const [subtaskStatusChange, setSubtaskStatusChange] = useState(0)
+    const [addSubtask, setAddSubtask] = useState(false)
+    const [newSubtask, setNewSubtask] = useState("")
 
     const [editAccess, setEditAccess] = useState(false)
     const [accessCount, setAccessCount] = useState(0)
@@ -17,26 +17,7 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
         console.log(task._id)
     }
 
-    // fetch all subtasks
-    useEffect(() => {
-        const ourRequest = Axios.CancelToken.source()
-        async function getSubtasks(){
-            console.log(task.project)
-            try{
-                const response = await Axios.get('http://localhost:8000/all-subtasks', {cancelToken: ourRequest.token})
-                console.log(response.data)
-                setSubtasks(response.data)
-                
-            }
-            catch(e){
-                console.log("There was a problem or the request was canceled!")
-            }
-        }
-        getSubtasks()
-        return () => {
-            ourRequest.cancel()
-        }
-    }, [subtaskStatusChange])
+    
 
     // get project access
     useEffect(() => {
@@ -85,14 +66,31 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
         }
     }
 
-    const subtaskCount = subtasks.filter(subtask => subtask.taskId == task._id ).length
-    const subtaskDoneCount = subtasks.filter(subtask => subtask.taskId == task._id && subtask.value == true).length
-
-    const progress = 100 / subtaskCount * subtaskDoneCount
-
-    console.log(subtaskCount)
-
-    
+    function handleNewSubtask() {
+        if(newSubtask.length > 3) {
+            const ourRequest = Axios.CancelToken.source()
+            async function addNewSubtask(){
+                try{
+                    const response = await Axios.post('http://localhost:8000/create-subtask',{
+                        content: newSubtask,
+                        taskId: task._id
+                    }, {cancelToken: ourRequest.token})
+                    setSubtaskStatusChange(subtaskStatusChange + 1)
+                    setNewSubtask("")
+                    
+                }
+                catch(e){
+                    console.log("There was a problem or the request was canceled!")
+                }
+            }
+            addNewSubtask()
+            return () => {
+                ourRequest.cancel()
+            }
+        } else {
+            // throw error
+        }
+    }
 
   return (
     <div className={"popup-box fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-50 " + (isOpenTask ? "" : "hidden")} onClick={(e) => {e.stopPropagation()}}>
@@ -109,13 +107,20 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss} ) {
                 <div className="body-subtasks mt-4 border-l-2 pl-6 py-3">
                     <h2 className="subtasks-label text-lg text-bold">Subtasks:</h2>
                     {subtaskCount ? 
-                    <div className="progress-bar w-full h-1 bg-red-500">
-                        <div className="progress-bar-filled bg-green-500 h-1" style={{ width: progress + "%" }}></div>
+                    <div className="progress-bar w-full h-[6px] bg-red-500 mt-2 rounded-lg">
+                        <div className="progress-bar-filled bg-[#1BC00C] h-[6px] rounded-lg" style={{ width: progress + "%" }}></div>
                     </div> : ""}
-                    <div className="checkbox-area mt-3">
+                    <div className="checkbox-area my-3">
                         {subtasks.filter(subtask => subtask.taskId == task._id ).map((subtask, index) => ( 
                             <Subtask subtask={subtask} index={index} subtasks={subtasks} setSubtasks={setSubtasks} key={subtask._id} setSubtaskStatusChange={setSubtaskStatusChange} subtaskStatusChange={subtaskStatusChange} />
                         ))}
+                    </div>
+                    <div className="add-subtasks">
+                        <input value={newSubtask} onChange={e => {
+                            setNewSubtask(e.target.value)
+                        }} id="new-subtask" name="subtask" className="w-full py-2 px-5 rounded-xl border-gray-200 border mt-1 focus:border-[#1BC00C]" type="text" placeholder="New subtask" autoComplete="off" />
+                        <button className="py-3 mr-4 text-[#B5B5B5] rounded-xl" onClick={() => setNewSubtask("")}>Discard</button>
+                        <button className="py-3 text-[#1BC00C] rounded-xl" onClick={handleNewSubtask}>Save subtask</button>
                     </div>
                 </div>
             </div>
