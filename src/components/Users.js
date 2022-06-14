@@ -3,6 +3,7 @@ import UsersPopup from './Users-components/UsersPopup'
 import {useImmer} from 'use-immer'
 import Axios from "axios"
 import StateContext from '../StateContext'
+import Loader from './Loader'
 
 function Users() {
     //Some state initialization
@@ -42,7 +43,11 @@ function Users() {
         }
     }, [usersCreated])
 
-    console.log(appState.user.admin)
+    if(state.isLoading) {
+        return (
+            <Loader />
+        )
+    }
 
   return (
     <div className=''>

@@ -3,6 +3,7 @@ import React, { useState, useEffect} from 'react'
 import {useImmer} from 'use-immer'
 import Axios from "axios"
 import Project from '../Projects-components/Project'
+import Loader from '../Loader'
 
 const ProjectsKanban = ({projectCreated}) => {
     const [projectState, setProjectState] = useImmer({
@@ -118,7 +119,7 @@ const ProjectsKanban = ({projectCreated}) => {
 
     if(projectState.isLoading) {
         return (
-            <div>Loading</div>
+            <Loader />
         )
     }
 

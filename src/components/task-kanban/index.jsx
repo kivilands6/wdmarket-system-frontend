@@ -4,6 +4,7 @@ import {useImmer} from 'use-immer'
 import Axios from "axios"
 import Task from '../Tasks-components/Task'
 import StateContext from '../../StateContext'
+import Loader from '../Loader'
 
 const TaskKanban = ({taskCreated}) => {
     const appState = useContext(StateContext)
@@ -133,7 +134,7 @@ const TaskKanban = ({taskCreated}) => {
 
     if(taskState.isLoading) {
         return (
-            <div>Loading</div>
+            <Loader />
         )
     }
 
