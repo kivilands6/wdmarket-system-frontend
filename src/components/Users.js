@@ -4,9 +4,11 @@ import {useImmer} from 'use-immer'
 import Axios from "axios"
 import StateContext from '../StateContext'
 import Loader from './Loader'
+import DispatchContext from '../DispatchContext'
 
 function Users() {
     //Some state initialization
+    const appDispatch = useContext(DispatchContext)
     const appState = useContext(StateContext)
     const [state, setState] = useImmer({
         isLoading: true,
@@ -49,6 +51,30 @@ function Users() {
         )
     }
 
+    function handleDeleteUser(userId) {
+        const confirmDelete = window.confirm("Do you really want to delete this user?")
+        if(confirmDelete && appState.user.admin) {
+            const ourRequest = Axios.CancelToken.source()
+            async function deleteUser(){
+                try{
+                    const response = await Axios.post('http://localhost:8000/delete-user',{
+                        id: userId,
+                    }, {cancelToken: ourRequest.token})
+                    setUsersCreated(usersCreated + 1)
+                    appDispatch({type: "flashMessage", value: "User deleted successfully"})
+                                  
+                }
+                catch(e){
+                    console.log("There was a problem or the request was canceled!")
+                }
+            }
+            deleteUser()
+            return () => {
+                ourRequest.cancel()
+            }
+        }
+    }
+
   return (
     <div className=''>
         {appState.user.admin ? <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewUserPopup}>Add new user</button> : ""}
@@ -65,6 +91,7 @@ function Users() {
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Phone</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Role</th>
                     <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Joined at</th>
+                    <th className="px-6 py-3 font-semibold text-white bg-[#5932EA]">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,6 +105,7 @@ function Users() {
                             <td className="px-6 py-3">{user.phone}</td>
                             <td className="px-6 py-3">{user.admin ? "Admin" : "User"}</td>
                             <td className="px-6 py-3">{user.joinedDate}</td>
+                            <td className="px-6 py-3"><button onClick={() => {handleDeleteUser(user._id)}}>Delete</button></td>
                         </tr>
                     )
                 })}

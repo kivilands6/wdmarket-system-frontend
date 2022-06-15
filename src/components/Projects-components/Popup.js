@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Axios from "axios"
+import DispatchContext from '../../DispatchContext'
 
-function Popup( {project, togglePopupClose, isOpenTask, statuss} ) {
+function Popup( {project, togglePopupClose, isOpenTask, statuss, projectDelete, setProjectDelete} ) {
+    const appDispatch = useContext(DispatchContext)
     const [isAccessOpen, setIsAccessOpen] = useState(false)
-
     const [editAccess, setEditAccess] = useState(false)
-
     const [access, setAccess] = useState("")
 
     const toggleAccess = () => {
@@ -53,6 +53,30 @@ function Popup( {project, togglePopupClose, isOpenTask, statuss} ) {
         updateAccess()
         return () => {
             ourRequest.cancel()
+        }
+    }
+
+    function handleDeleteProject() {
+        const confirmDelete = window.confirm("Do you really want to delete this project?")
+        if(confirmDelete) {
+            const ourRequest = Axios.CancelToken.source()
+            async function deleteProject(){
+                try{
+                    const response = await Axios.post('http://localhost:8000/delete-project',{
+                        projectId: project._id,
+                    }, {cancelToken: ourRequest.token})
+                    setProjectDelete(projectDelete + 1)
+                    appDispatch({type: "flashMessage", value: "Project deleted successfully"})
+                                  
+                }
+                catch(e){
+                    console.log("There was a problem or the request was canceled!")
+                }
+            }
+            deleteProject()
+            return () => {
+                ourRequest.cancel()
+            }
         }
     }
 
@@ -129,6 +153,9 @@ function Popup( {project, togglePopupClose, isOpenTask, statuss} ) {
                         <div className="end-date-label mr-2 w-fit">Due date:</div>
                         <div className="end-date-value border rounded-lg border-[#E2E2E2] px-6 py-1 w-3/5 text-center">{project.endDate}</div>
                     </div>
+                </div>
+                <div className="delete-project">
+                    <button className="py-3 px-7 mb-10 bg-red-500 text-white rounded-xl absolute bottom-0 right-8" onClick={handleDeleteProject}>Delete project</button>
                 </div>
             </div>
 

@@ -3,7 +3,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import Axios from "axios"
 import Popup from './Popup'
 
-const Task = ( { task, index, statuss } ) => {
+const Task = ( { task, index, statuss, taskDelete, setTaskDelete } ) => {
   const [isOpenTask, setIsOpenTask] = useState(false);
   const [subtasks, setSubtasks] = useState([])
   const [subtaskStatusChange, setSubtaskStatusChange] = useState(0)
@@ -92,6 +92,8 @@ const progress = 100 / subtaskCount * subtaskDoneCount
           setSubtaskStatusChange={setSubtaskStatusChange}
           subtaskCount={subtaskCount}
           progress={progress}
+          taskDelete={taskDelete}
+          setTaskDelete={setTaskDelete}
           />
         </div>
       )}

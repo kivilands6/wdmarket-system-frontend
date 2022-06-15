@@ -5,19 +5,19 @@ import DispatchContext from '../DispatchContext'
 function Login() {
     const appDispatch = useContext(DispatchContext)
 
+    //Some state set
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
 
+    // Handle function for login
     async function handleSubmit(e){
         e.preventDefault()
         try{
             const response = await Axios.post('http://localhost:8000/login', {username, password})
             if(response.data){
-                console.log(response.data)
-                appDispatch({type: 'login', data: response.data})
-                appDispatch({type: "flashMessage", value: "Welcome back " + username + "!"})
+                appDispatch({type: 'login', data: response.data}) // set user data
+                appDispatch({type: "flashMessage", value: "Welcome back " + username + "!"}) // display a message
             }else{
-                console.log("Incorrect username or password")
                 appDispatch({type: "flashMessage", value: "Invalid username or password"})
             }
         }catch(e){

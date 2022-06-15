@@ -6,6 +6,7 @@ import Project from '../Projects-components/Project'
 import Loader from '../Loader'
 
 const ProjectsKanban = ({projectCreated}) => {
+    const [projectDelete, setProjectDelete] = useState(0)
     const [projectState, setProjectState] = useImmer({
         isLoading: true,
         allProjects: []
@@ -65,7 +66,7 @@ const ProjectsKanban = ({projectCreated}) => {
         return () => {
             ourRequest.cancel()
         }
-    }, [projectCreated]) 
+    }, [projectCreated, projectDelete]) 
 
     function changeStatuss ( statuss, projectId ) {
         const ourRequest = Axios.CancelToken.source()
@@ -146,7 +147,7 @@ const ProjectsKanban = ({projectCreated}) => {
                                     <div className="kanban__section__content">
                                         {
                                             section.projects.map((project, index) => (
-                                                <Project project={project} index={index} statuss={section.title} key={project._id} /> 
+                                                <Project project={project} index={index} statuss={section.title} key={project._id} projectDelete={projectDelete} setProjectDelete={setProjectDelete} /> 
                                             ))
                                         }
                                         {provided.placeholder}

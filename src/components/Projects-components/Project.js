@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import Popup from './Popup'
 
-const Project = ( { project, index, statuss } ) => {
+const Project = ( { project, index, statuss, projectDelete, setProjectDelete } ) => {
   const [isOpenTask, setIsOpenTask] = useState(false);
   
   const togglePopupOpen = () => {
@@ -51,7 +51,7 @@ const Project = ( { project, index, statuss } ) => {
               </div>
             </div>
           </div>
-          <Popup project={project} togglePopupClose={togglePopupClose} isOpenTask={isOpenTask} statuss={statuss} />
+          <Popup project={project} togglePopupClose={togglePopupClose} isOpenTask={isOpenTask} statuss={statuss} projectDelete={projectDelete} setProjectDelete={setProjectDelete} />
         </div>
       )}
     </Draggable>

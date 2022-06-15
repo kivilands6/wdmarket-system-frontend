@@ -8,6 +8,7 @@ import Loader from '../Loader'
 
 const TaskKanban = ({taskCreated}) => {
     const appState = useContext(StateContext)
+    const [taskDelete, setTaskDelete] = useState(0)
     const [taskState, setTaskState] = useImmer({
         isLoading: true,
         allTasks: []
@@ -81,7 +82,7 @@ const TaskKanban = ({taskCreated}) => {
         return () => {
             ourRequest.cancel()
         }
-    }, [taskCreated]) 
+    }, [taskCreated, taskDelete]) 
 
     function changeStatuss ( statuss, projectId ) {
         const ourRequest = Axios.CancelToken.source()
@@ -161,10 +162,10 @@ const TaskKanban = ({taskCreated}) => {
                                     <div className="kanban__section__content">
                                         {
                                             appState.user.admin ? section.tasks.map((task, index) => (
-                                                <Task task={task} index={index} statuss={section.title} key={task._id} />
+                                                <Task task={task} index={index} statuss={section.title} key={task._id} setTaskDelete={setTaskDelete} taskDelete={taskDelete} />
                                             )) : 
                                             section.tasks.filter(task => task.assignee == appState.user.username).map((task, index) => (
-                                                <Task task={task} index={index} statuss={section.title} key={task._id} />
+                                                <Task task={task} index={index} statuss={section.title} key={task._id} setTaskDelete={setTaskDelete} taskDelete={taskDelete} />
                                             ))
                                         }
                                         {provided.placeholder}

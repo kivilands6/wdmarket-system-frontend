@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useContext} from 'react'
 import Axios from 'axios'
 import {useImmerReducer} from 'use-immer'
+import DispatchContext from '../../DispatchContext'
 
 function NewProjectPopup( {newProjectPopup, toggleNewProjectPopup, setProjectCreated} ) {
+    const appDispatch = useContext(DispatchContext)
 
     const initialState = {
         name: {
@@ -95,6 +97,7 @@ function NewProjectPopup( {newProjectPopup, toggleNewProjectPopup, setProjectCre
                     setProjectCreated(prev => {
                         return prev + 1
                     })
+                    appDispatch({type: "flashMessage", value: "New project created successfully"})
                 }
                 catch(e){
                     console.log("There was a problem or the request was canceled")

@@ -57,50 +57,9 @@ function UsersPopup( {newUserPopup, toggleNewUserPopup, setUsersCreated} ) {
             draft.username.value = action.value
             return
     
-          case "usernameAfterDelay":
-            if(draft.username.value.length < 3) {
-              draft.username.hasErrors = true
-              draft.username.message = "Username must have at least 3 characters"
-            }
-    
-            if(!draft.hasErrors && !action.noRequest) {
-              draft.username.checkCount++
-            }
-            return
-    
-          case "usernameUniqueResults":
-            if(action.value) {
-              draft.username.hasErrors = true
-              draft.username.isUnique = false
-              draft.username.message = "That username is already taken"
-            } else {
-              draft.username.isUnique = true
-            }
-            return
-    
           case "emailImmediately":
             draft.email.hasErrors = false
             draft.email.value = action.value
-            return
-    
-          case "emailAfterDelay":
-            if(!/^\S+@\S+$/.test(draft.email.value)) {
-              draft.email.hasErrors = true
-              draft.email.message = "You must provide a valid email address"
-            }
-            if(!draft.email.hasErrors && !action.noRequest) {
-              draft.email.checkCount++
-            }
-            return
-    
-          case "emailUniqueResults":
-            if(action.value) {
-              draft.email.hasErrors = true
-              draft.email.isUnique = false
-              draft.email.message = "That email is already taken"
-            } else {
-              draft.email.isUnique = true
-            }
             return
     
           case "passwordImmediately":
@@ -109,13 +68,6 @@ function UsersPopup( {newUserPopup, toggleNewUserPopup, setUsersCreated} ) {
             if(draft.password.value.length > 50) {
               draft.password.hasErrors = true
               draft.password.message = "Password cannot exceed 50 characters"
-            }
-            return
-    
-          case "passwordAfterDelay":
-            if (draft.password.value.length < 12) {
-              draft.password.hasErrors = true
-              draft.password.message = "Password must be at least 12 characters"
             }
             return
     
@@ -174,6 +126,7 @@ function UsersPopup( {newUserPopup, toggleNewUserPopup, setUsersCreated} ) {
                     setUsersCreated(prev => {
                         return prev + 1
                     })
+                    appDispatch({type: "flashMessage", value: "New user created successfully"})
                 }
                 catch(e){
                     console.log("There was a problem or the request was canceled")

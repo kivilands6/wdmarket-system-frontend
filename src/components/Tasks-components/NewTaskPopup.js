@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Axios from 'axios'
 import {useImmerReducer} from 'use-immer'
+import DispatchContext from '../../DispatchContext'
 
 function NewTaskPopup( {newTaskPopup, toggleNewTaskPopup, setTaskCreated} ) {
+    const appDispatch = useContext(DispatchContext)
     const [allProjects, setAllProjects] = useState([])
     const [allUsers, setAllUsers] = useState([])
 
@@ -91,6 +93,7 @@ function NewTaskPopup( {newTaskPopup, toggleNewTaskPopup, setTaskCreated} ) {
                     setTaskCreated(prev => {
                         return prev + 1
                     })
+                    appDispatch({type: "flashMessage", value: "New task created successfully"})
                 }
                 catch(e){
                     console.log("There was a problem or the request was canceled")

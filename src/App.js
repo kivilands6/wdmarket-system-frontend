@@ -1,5 +1,3 @@
-import './App.css';
-
 import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import Header from './components/Header';
@@ -9,6 +7,7 @@ import ErrorPage from './components/ErrorPage';
 import Users from './components/Users';
 import Login from './components/Login';
 import Profile from './components/Profile';
+import FlashMessages from './components/FlashMessages';
 
 import { useState, useEffect } from 'react';
 import { useImmerReducer } from 'use-immer'
@@ -46,6 +45,7 @@ function App() {
     loggedIn: Boolean(localStorage.getItem("userToken")),
     isSidebarOpen: Boolean(localStorage.getItem("isSidebarOpen")),
     navItem: NavItemSort(),
+    flashMessages: [],
     user: {
       token: localStorage.getItem('userToken'),
       username: localStorage.getItem('userUsername'),
@@ -71,10 +71,10 @@ function App() {
       case "logout":
         draft.loggedIn = false
         return
-      /*
+
       case "flashMessage":
         draft.flashMessages.push(action.value)
-        return */
+        return
 
       case "toggleSidebar":
         draft.isSidebarOpen = !draft.isSidebarOpen
@@ -145,6 +145,7 @@ function App() {
     <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
           <Router>
+          <FlashMessages messages={ state.flashMessages } />
             {state.loggedIn ? 
               
             <div className="main-wrapper mx-auto">

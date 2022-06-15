@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import Axios from "axios"
 import Subtask from './Subtask'
+import DispatchContext from '../../DispatchContext'
 
-function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubtasks, subtaskStatusChange, setSubtaskStatusChange, subtaskCount, progress} ) {
+function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubtasks, subtaskStatusChange, setSubtaskStatusChange, subtaskCount, progress, setTaskDelete, taskDelete} ) {
+    const appDispatch = useContext(DispatchContext)
     const [isAccessOpen, setIsAccessOpen] = useState(false)
-    const [addSubtask, setAddSubtask] = useState(false)
     const [newSubtask, setNewSubtask] = useState("")
 
     const [editAccess, setEditAccess] = useState(false)
@@ -92,6 +93,30 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubta
         }
     }
 
+    function handleDeleteTask() {
+        const confirmDelete = window.confirm("Do you really want to delete this task?")
+        if(confirmDelete) {
+            const ourRequest = Axios.CancelToken.source()
+            async function deleteTask(){
+                try{
+                    const response = await Axios.post('http://localhost:8000/delete-task',{
+                        id: task._id,
+                    }, {cancelToken: ourRequest.token})
+                    setTaskDelete(taskDelete + 1)
+                    appDispatch({type: "flashMessage", value: "Task deleted successfully"})
+                                  
+                }
+                catch(e){
+                    console.log("There was a problem or the request was canceled!")
+                }
+            }
+            deleteTask()
+            return () => {
+                ourRequest.cancel()
+            }
+        }
+    }
+
   return (
     <div className={"popup-box fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-50 " + (isOpenTask ? "" : "hidden")} onClick={(e) => {e.stopPropagation()}}>
         <div className="popup-content relative w-3/4 my-0 mx-auto h-auto max-h-[70vh] bg-[#F6F9FF] mt-[10vh] rounded-xl min-h-[500px] flex">
@@ -173,6 +198,9 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubta
                         <div className="priority-label mr-10">Statuss:</div>
                         <div className="project-name border rounded-lg border-[#E2E2E2] px-6 py-1 w-full text-center">{statuss}</div>
                     </div>
+                </div>
+                <div className="delete-task">
+                    <button className="py-3 px-7 mb-10 bg-red-500 text-white rounded-xl absolute bottom-0 right-8" onClick={handleDeleteTask}>Delete task</button>
                 </div>
             </div>
 
