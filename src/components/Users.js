@@ -76,7 +76,7 @@ function Users() {
     }
 
   return (
-    <div className=''>
+    <div className='user-container'>
         {appState.user.admin ? <button className="py-3 px-7 mb-10 bg-[#5932EA] text-white rounded-xl" onClick={toggleNewUserPopup}>Add new user</button> : ""}
         <div>
             <h2 className='body-title font-semibold text-xl'>All users</h2>

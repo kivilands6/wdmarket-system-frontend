@@ -6,6 +6,10 @@
     outline: none !important;
 }
 
+#main {
+  transition: margin-left .4s;
+}
+
 .floating-alert {
     display: none;
     position: absolute;
@@ -75,4 +79,44 @@
       visibility: hidden;
       transform: translateX(-50%) scale(1.2);
     }
+}
+
+.liveValidateMessage {
+  color: black;
+  top: -26px;
+  position: absolute;
+  z-index: 1;
+  padding-top: 6px;
+  padding-bottom: 16px;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  border-radius: 10px 10px 0px 0px;
+  width: 100%;
+}
+
+.liveValidateMessage--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.liveValidateMessage-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.liveValidateMessage-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.33s opacity ease-in-out, 0.33s transform ease-in-out;
+}
+
+.liveValidateMessage-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.liveValidateMessage-exit-active {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: 0.33s opacity ease-in-out, 0.33s transform ease-in-out;
 }
