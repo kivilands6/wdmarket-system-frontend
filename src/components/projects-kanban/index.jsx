@@ -40,7 +40,6 @@ const ProjectsKanban = ({projectCreated}) => {
         const ourRequest = Axios.CancelToken.source()
     
             async function fetchData(){
-                console.log("axios function")
                 try{
                     const response = await Axios.get('http://localhost:8000/all-projects', {cancelToken: ourRequest.token})
                     const newProjects = await Axios.get('http://localhost:8000/projects-new', {cancelToken: ourRequest.token})

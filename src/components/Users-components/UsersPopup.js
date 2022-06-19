@@ -193,18 +193,18 @@ function UsersPopup( {newUserPopup, toggleNewUserPopup, setUsersCreated} ) {
               draft.address.value = action.value
               if(draft.address.value.length > 50) {
                 draft.address.hasErrors = true
-                draft.address.message = "address number cannot exceed 50 characters"
+                draft.address.message = "Address cannot exceed 50 characters"
               }
               return
 
             case "addressAfterDelay":
               if (draft.address.value.length < 10) {
                 draft.address.hasErrors = true
-                draft.address.message = "address number must be at least 10 characters long"
+                draft.address.message = "Address must be at least 10 characters long"
               }
               if (!/^[A-Za-z0-9'\.\-\s\,]*$/.test(draft.address.value)) {
                 draft.address.hasErrors = true
-                draft.address.message = "address number can only contain plus sign and numbers"
+                draft.address.message = "Address cannot contain symbols"
               }
               return
 

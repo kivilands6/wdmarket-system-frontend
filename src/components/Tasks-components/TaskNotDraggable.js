@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
-import { Draggable } from 'react-beautiful-dnd'
 import Axios from "axios"
 import Popup from './Popup'
 
-const Task = ( { task, index, statuss, taskDelete, setTaskDelete } ) => {
+const TaskNotDraggable = ( { task, index, statuss, taskDelete, setTaskDelete } ) => {
   const [isOpenTask, setIsOpenTask] = useState(false);
   const [subtasks, setSubtasks] = useState([])
   const [subtaskStatusChange, setSubtaskStatusChange] = useState(0)
@@ -35,33 +34,15 @@ const Task = ( { task, index, statuss, taskDelete, setTaskDelete } ) => {
     return () => {
         ourRequest.cancel()
     }
-}, [subtaskStatusChange])
+    }, [subtaskStatusChange])
 
-const subtaskCount = subtasks.filter(subtask => subtask.taskId == task._id ).length
-const subtaskDoneCount = subtasks.filter(subtask => subtask.taskId == task._id && subtask.value == true).length
+    const subtaskCount = subtasks.filter(subtask => subtask.taskId == task._id ).length
+    const subtaskDoneCount = subtasks.filter(subtask => subtask.taskId == task._id && subtask.value == true).length
 
-const progress = 100 / subtaskCount * subtaskDoneCount
+    const progress = 100 / subtaskCount * subtaskDoneCount
 
   return (
-    <Draggable
-      key={task._id}
-      draggableId={task._id}
-      index={index}
-      isDragDisabled={isOpenTask}
-    >
-      {(provided, snapshot) => (
-        <div
-          onClick={(e) => {
-            togglePopupOpen()
-          }}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{
-              ...provided.draggableProps.style,
-              opacity: snapshot.isDragging ? '0.5' : '1'
-          }}
-        >
+        <div onClick={togglePopupOpen}>
           <div className="task-container bg-white rounded-xl p-4 mt-4">
             <div className="task-container-header flex justify-between">
               <h4 className="task-title">{task.title}</h4>
@@ -99,9 +80,7 @@ const progress = 100 / subtaskCount * subtaskDoneCount
           setTaskDelete={setTaskDelete}
           />
         </div>
-      )}
-    </Draggable>
   )
 }
 
-export default Task
+export default TaskNotDraggable

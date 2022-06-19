@@ -54,11 +54,8 @@ const TaskKanban = ({taskCreated}) => {
         async function fetchData(){
             try{
                 const response = await Axios.get('http://localhost:8000/all-tasks', {cancelToken: ourRequest.token})
-                console.log(response.data)
                 const backlogTasks = await Axios.get('http://localhost:8000/tasks-backlog', {cancelToken: ourRequest.token})
-                console.log(backlogTasks.data)
                 const todoTasks = await Axios.get('http://localhost:8000/tasks-todo', {cancelToken: ourRequest.token})
-                console.log(todoTasks.data)
                 const inprogressTasks = await Axios.get('http://localhost:8000/tasks-inprogress', {cancelToken: ourRequest.token})
                 const testingTasks = await Axios.get('http://localhost:8000/tasks-testing', {cancelToken: ourRequest.token})
                 const doneTasks = await Axios.get('http://localhost:8000/tasks-done', {cancelToken: ourRequest.token})

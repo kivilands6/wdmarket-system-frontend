@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
-import { Draggable } from 'react-beautiful-dnd'
 import Popup from './Popup'
 
-const Project = ( { project, index, statuss, projectDelete, setProjectDelete } ) => {
+const ProjectNotDraggable = ( { project, statuss, projectDelete, setProjectDelete } ) => {
   const [isOpenTask, setIsOpenTask] = useState(false);
   
   const togglePopupOpen = () => {
@@ -14,23 +13,7 @@ const Project = ( { project, index, statuss, projectDelete, setProjectDelete } )
   }
 
   return (
-    <Draggable
-      key={project._id}
-      draggableId={project._id}
-      index={index}
-      isDragDisabled={isOpenTask}
-    >
-      {(provided, snapshot) => (
-        <div
-          onClick={() => togglePopupOpen()}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={{
-              ...provided.draggableProps.style,
-              opacity: snapshot.isDragging ? '0.5' : '1'
-          }}
-        >
+        <div onClick={() => togglePopupOpen()}>
           <div className="task-container bg-white rounded-xl p-4 mt-4">
             <div className="task-container-header flex justify-between">
               <h4 className="task-title">{project.name}</h4>
@@ -54,9 +37,7 @@ const Project = ( { project, index, statuss, projectDelete, setProjectDelete } )
           </div>
           <Popup project={project} togglePopupClose={togglePopupClose} isOpenTask={isOpenTask} statuss={statuss} projectDelete={projectDelete} setProjectDelete={setProjectDelete} />
         </div>
-      )}
-    </Draggable>
   )
 }
 
-export default Project
+export default ProjectNotDraggable

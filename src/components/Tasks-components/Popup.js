@@ -14,8 +14,6 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubta
 
     const toggleAccess = () => {
         setIsAccessOpen(!isAccessOpen)
-        console.log(subtasks)
-        console.log(task._id)
     }
 
     
@@ -119,7 +117,7 @@ function Popup( {task, togglePopupClose, isOpenTask, statuss, subtasks, setSubta
 
   return (
     <div className={"popup-box fixed top-0 left-0 w-full h-screen z-50 bg-black bg-opacity-50 " + (isOpenTask ? "" : "hidden")} onClick={(e) => {e.stopPropagation()}}>
-        <div className="popup-content relative w-3/4 my-0 mx-auto h-auto max-h-[70vh] bg-[#F6F9FF] mt-[10vh] rounded-xl min-h-[500px] flex">
+        <div className="popup-content relative w-3/4 my-0 mx-auto h-auto max-h-[70vh] bg-[#F6F9FF] mt-[10vh] rounded-xl min-h-[500px] flex" onClick={(e) => {e.stopPropagation()}}>
 
             <div className="task-left-column w-[70%] py-8 pt-5 px-16">
                 <h2 className="task-title text-4xl text-bold">
