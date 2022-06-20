@@ -8,14 +8,14 @@ Web sistēma kura paredzēta uzdevumu un projektu menedžēšanai.
 
 ### Izmantotās tehnoloģijas
 
-HTML5
-CSS3
-Javascript
-React
-Tailwindcss
-MongoDB
-NodeJS
-ExpressJS
+-HTML5
+-CSS3
+-Javascript
+-React
+-Tailwindcss
+-MongoDB
+-NodeJS
+-ExpressJS
 
 ### Izmantotie avoti
 
