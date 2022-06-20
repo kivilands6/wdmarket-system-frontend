@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Uzdevumu menedžēšanas sistēma
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### Projekta apraksts
 
-In the project directory, you can run:
+Šis ir mans PIKC "Rīgas Valsts tehnikums" kvalifikācijas darbs.
+Web sistēma kura paredzēta uzdevumu un projektu menedžēšanai.
 
-### `npm start`
+### Izmantotās tehnoloģijas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+HTML5
+CSS3
+Javascript
+React
+Tailwindcss
+MongoDB
+NodeJS
+ExpressJS
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Izmantotie avoti
 
-### `npm test`
+React dokumentācija - https://reactjs.org/docs/getting-started.html - (resurs skatīts sākot no 24.11.2021)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+React router dokumentācija - https://reactrouter.com/docs/en/v6/getting-started/overview - (resurs skatīts sākot no 20.04.2021)
 
-### `npm run build`
+React beautiful dnd izmantošanas pamācība - https://egghead.io/courses/beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd - (resurs skatīts sākot no 25.04.2022)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+TailwindCSS uzstādīšana - https://www.youtube.com/watch?v=Pe1Vo2N3Z2c&t=733s (resurs skatīts 27.04.2022)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+TailwindCSS klašu špikeris - https://nerdcave.com/tailwind-cheat-sheet (resurs skatīts sākot no 27.04.2022)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Brad Schiff (React kurss) - https://www.udemy.com/course/react-for-the-rest-of-us/ - (resurs skatīts sākot no 24.11.2021)
 
-### `npm run eject`
+Brad Schiff (Javascript kurss) - https://www.udemy.com/course/web-design-for-beginners-real-world-coding-in-html-css/ - (resurs skatīts sākot no 1.05.2022)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+React immer dokumentācija - https://immerjs.github.io/immer/ (resurs skatīts sākot no 21.04.2022)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ExpressJs dokumnetācija - https://expressjs.com/en/guide/routing.html (resurs skatīts sākot no 01.05.2022)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Mongodb nodejs dokumentācija - https://www.mongodb.com/docs/drivers/node/current/ - (resurs skatīts sākot no 01.05.2022)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Uzstādīšanas instrukcijas
 
-## Learn More
+#### Lokāli:
+1. Nolādēt github folderi
+2. iejiet caur termināli "frontend" un palaist komandu "npm install", to pašu izdarīt "backend" folderī
+3. "backend" folderi izveidot .env failu un iestatīt "PORT=8000" un "CONNECTIONSTRING=xxxxxxxxx" x vietā ievietot mongodb connection stringu
+4. Tālāk izveidot .env failu "forntend" folderi un pievienot mainīgo "REACT_APP_BACKENDURL="http://localhost:8000""
+5. Lai palaistu pašu programmu konsolē "backend folderī jāpalaiž komanda "npm run watch" un "frontend" feloderī komanda "npm run start"
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
