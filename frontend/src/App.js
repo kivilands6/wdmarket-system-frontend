@@ -16,8 +16,7 @@ import FlashMessages from './components/FlashMessages';
 
 import StateContext from './StateContext'
 import DispatchContext from './DispatchContext'
-Axios.defaults.baseURL = process.env.REACT_APP_BACKENDURL
-console.log(process.env.REACT_APP_BACKENDURL)
+Axios.defaults.baseURL = "http://localhost:8000/"
 
 
 function App() {

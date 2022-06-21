@@ -163,6 +163,7 @@ function NewTaskPopup( {newTaskPopup, toggleNewTaskPopup, setTaskCreated} ) {
     function handleSubmit(e){
         dispatch({type: "titleImmediately", value: state.title.value})
         dispatch({type: "titleAfterDelay", value: state.title.value})
+        dispatch({type: "projectImmediately", value: state.project.value})
         dispatch({type: "checkProject", value: state.project.value})
         dispatch({type: "checkAssignee", value: state.assignee.value})
         dispatch({type: "checkPriority", value: state.priority.value})
@@ -225,7 +226,7 @@ function NewTaskPopup( {newTaskPopup, toggleNewTaskPopup, setTaskCreated} ) {
                             <label htmlFor="priority-register" className="text-muted mb-1 font-semibold absolute top-[-25px]">
                                 Priority
                             </label>
-                            <select name="assignee-register" form="create-task-form" id="assignee-select" onChange={e => dispatch({type: "assigneeImmediately", value: e.target.value})} className="w-full py-2 px-5 rounded-xl border-gray-200 border mt-1 z-10 relative">
+                            <select name="assignee-register" form="create-task-form" id="assignee-select" onChange={e => dispatch({type: "priorityImmediately", value: e.target.value})} className="w-full py-2 px-5 rounded-xl border-gray-200 border mt-1 z-10 relative">
                                 <option value="" selected disabled hidden>Choose assignee</option>
                                 <option value="Low">Very Low</option>
                                 <option value="Low">Low</option>
